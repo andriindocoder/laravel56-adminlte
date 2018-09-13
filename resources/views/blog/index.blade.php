@@ -22,6 +22,12 @@
           </div>
         @endif
 
+        @if(isset($authorName))
+          <div class="alert alert-info">
+            <p>Author: <strong>{{ $authorName }}</strong></p>
+          </div>
+        @endif
+
         @foreach($posts as $post)
 
         <!-- Blog Post -->
@@ -35,7 +41,7 @@
             <a href="{{ route('blog.show', $post->slug) }}" class="btn btn-primary">Read More &rarr;</a>
           </div>
           <div class="card-footer text-muted">
-            Posted on {{ $post->date }} 
+            Posted on {{ $post->date }} by <a href="{{ route('author', $post->author->slug) }}">{{ $post->author->name }}</a>
              in category <a href="{{ route('category', $post->category->slug )}}">{{ $post->category->title }}</a>
           </div>
         </div>
