@@ -36,6 +36,7 @@ class BlogController extends Controller
 
 	public function show(Post $post){
 
+		$post->increment('view_count',1);
 		return view("blog.show", compact('post'));
 	}
 
