@@ -3,45 +3,58 @@
 @section('content')
 <!-- Page Content -->
 <div class="container">
- 
+
   <div class="row">
- 
+
     <!-- Blog Entries Column -->
     <div class="col-md-8">
- 
+
       <h1 class="my-4">
       </h1>
-
-      @foreach($posts as $post)
- 
-      <!-- Blog Post -->
-      <div class="card mb-4">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-        <div class="card-body">
-          <h2 class="card-title"><a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h2>
-          <p class="card-text">{{ $post->excerpt }}</p>
-          <a href="{{ route('blog.show', $post->slug) }}" class="btn btn-primary">Read More &rarr;</a>
+      @if(!$posts->count())
+        <div class="alert alert-warning">
+          <p>Nothing Found</p>
         </div>
-        <div class="card-footer text-muted">
-          Posted on {{ $post->date }} by
-          <a href="#">{{ $post->author->name }}</a>
-        </div>
-      </div>
+      @else
+        @if(isset($categoryName))
+          <div class="alert alert-info">
+            <p>Category: <strong>{{ $categoryName }}</strong></p>
+          </div>
+        @endif
 
-      @endforeach
-      
+        @foreach($posts as $post)
+
+        <!-- Blog Post -->
+        <div class="card mb-4">
+          @if($post->image_url)
+          <img class="card-img-top" src="{{ $post->image_url }}" alt="{{ $post->slug }}">
+          @endif
+          <div class="card-body">
+            <h2 class="card-title"><a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h2>
+            <p class="card-text">{!! $post->excerpt_html !!}</p>
+            <a href="{{ route('blog.show', $post->slug) }}" class="btn btn-primary">Read More &rarr;</a>
+          </div>
+          <div class="card-footer text-muted">
+            Posted on {{ $post->date }} 
+             in category <a href="{{ route('category', $post->category->slug )}}">{{ $post->category->title }}</a>
+          </div>
+        </div>
+
+        @endforeach
+      @endif
+
       <!-- Pagination -->
       <ul class="pagination justify-content-center mb-4">
         {{ $posts->links() }}
       </ul>
- 
+
     </div>
- 
+
     @include('layouts.sidebar')
- 
+
   </div>
   <!-- /.row -->
- 
+
 </div>
 <!-- /.container -->
 @endsection
