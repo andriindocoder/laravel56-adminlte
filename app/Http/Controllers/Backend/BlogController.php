@@ -4,10 +4,20 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Http\Requests;
+use Intervention\Image\Facades\Image;
 
 class BlogController extends BackendController
 {
     protected $limit=5;
+    protected $uploadPath;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->uploadPath = public_path(config('cms.image.directory'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,9 +36,9 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Post $post)
     {
-        dd("create new blog");
+        return view("backend.blog.create", compact('post'));
     }
 
     /**
@@ -37,9 +47,44 @@ class BlogController extends BackendController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\PostRequest $request)
     {
-        //
+        $data = $this->handleRequest($request);
+
+        $request->user()->posts()->create($data);
+
+        return redirect(route('backend.blog.index'))->with('message', 'Post has been added');
+    }
+
+    private function handleRequest($request){
+        $data = $request->all();
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $thumbnail = 
+            $fileName = $image->getClientOriginalName();
+
+            $destination = $this->uploadPath;
+
+            $uploaded = $image->move($destination, $fileName);
+
+            if($uploaded){
+                $width = config('cms.image.thumbnail.width');
+                $height = config('cms.image.thumbnail.height');
+
+                $extension = $image->getClientOriginalExtension();
+                $thumbnail = str_replace(".{$extension}", "_thumb.{$extension}", $fileName);
+
+                Image::make($destination . '/' . $fileName)
+                        ->resize($width,$height)
+                        ->save($destination . '/' . $thumbnail);
+            }
+
+
+            $data['image'] = $fileName;
+        }
+
+        return $data;
     }
 
     /**
