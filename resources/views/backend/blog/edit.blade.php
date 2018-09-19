@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title', 'Laravel 5 Blog | Add New POst')
+@section('title', 'Laravel 5 Blog | Edit New POst')
 
 @section('content')
 <div class="content-wrapper">
@@ -9,13 +9,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Blog <small style="font-size: 15px">Add New Posts</small></h1>
+            <h1 class="m-0 text-dark">Blog <small style="font-size: 15px">Edit Post</small></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
               <li class="breadcrumb-item"><a href="{{ url('/blog.index') }}">Blog</a></li>
-              <li class="breadcrumb-item active">Add new</li>
+              <li class="breadcrumb-item active">Edit Post</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -27,8 +27,8 @@
 		    <div class="row">
 		      <div class="col-md-9">
 		      	{!! Form::model($post, [
-		      		'method' => 'POST',
-		      		'route' => 'backend.blog.store',
+		      		'method' => 'PUT',
+		      		'route' => ['backend.blog.update', $post->id],
 		      		'files' => TRUE,
 		      		'id' 	=> 'post-form'
 		      	])!!}
