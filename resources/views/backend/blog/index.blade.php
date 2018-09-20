@@ -55,60 +55,42 @@
   	              			  </span>
   	              			</a>
   	              		</div>
-	              		<div class="col-md-6" style="padding-left: 10px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; ">
-	              			<div class="float-right" style="color: blue;">
-	              				<a class="" href="?status=active">Active(12) </a>
-	              			</div>
-	              		</div>
+						<div class="col-md-6" style="padding-left: 10px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; ">
+							<div class="pull-right" style="padding:7px 0;">
+							  <?php $links = [];?>
+							  @foreach($statusList as $key => $value)
+							      @if($value)
+							        <?php $selected = Request::get('status') == $key ? 'selected-status' : '' ?>
+							        <?php $links[] = "<a class=\"{$selected}\" href=\"?status={$key}\">" .ucwords($key) ."({$value}) </a>"?>
+							      @endif
+							  @endforeach
+							  {!! implode(' | ', $links) !!}
+							</div>
+						</div>
   	              	</div>
-				@if(session('message'))
-					<div class="alert alert-success">
-						{{ session('message') }}
-					</div>
-				@endif
+				@include('backend.blog.message')
 
 	            @if(!$posts->count())
 				<div class="alert alert-danger">
 					<strong>No Record Found</strong>
 				</div>
 				@else
-
-              <table class="table table-striped">
-				  <tr>
-				    <th width="10%">Action </th>
-				    <th>Title</th>
-				    <th width="20%">Author</th>
-				    <th width="20%">Category</th>
-				    <th width="20%">Date</th>
-				  </tr>
-				  @foreach($posts as $post)
-					  <tr>
-					      <td>
-					      	<a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-sm btn-default"><i class="fa fa-edit"></i></a>
-					      	<a href="{{ route('backend.blog.destroy', $post->id) }}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
-					      </td>
-					  	  <td>{{ $post->title }}</td>
-					      <td>{{ $post->author->name }}</td>
-							<td>{{ $post->category->title }}</td>
-							<td>
-								<abbr title="{{ $post->formattedDate(true) }}"> {{ $post->formattedDate() }}</abbr> | 
-								{!! $post->publicationLabel() !!}
-							</td>
-					  	</tr>
-				  @endforeach
-				</table>
+					@if($onlyTrashed)
+						@include('backend.blog.table-trash')
+					@else
+						@include('backend.blog.table')
+					@endif
 				@endif
 			</div>
 			<div class="card-footer clearfix">
 				<div class="pull-left" id="pagination">
-					{{ $posts->render() }}
+					{{ $posts->appends( Request::query() )->render() }}
 				</div>
 				<div class="pull-right">
 					<?php $postCount = $posts->count();?>
 					<small style="padding-right: 25px;">{{ $postCount }} out of {{ $allPostCount }} {{ str_plural('Items', $allPostCount) }}</small>
 				</div>
 			</div>			                    	                	              
-
         </div>
         <!-- /.card -->
       </div>
