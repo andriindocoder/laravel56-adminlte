@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title', 'Laravel 5 Blog | Blog Index')
+@section('title', 'Laravel 5 Blog | Category Index')
 
 @section('content')
 <div class="content-wrapper">
@@ -9,13 +9,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Blog <small style="font-size: 15px">Display All Blog Posts</small></h1>
+            <h1 class="m-0 text-dark">Category <small style="font-size: 15px">Display All Categories</small></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="{{ url('/blog.index') }}">Blog</a></li>
-              <li class="breadcrumb-item active">All Posts</li>
+              <li class="breadcrumb-item"><a href="{{ url('/blog.index') }}">Category</a></li>
+              <li class="breadcrumb-item active">All Categories</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,7 +29,7 @@
 	            <div class="card">
 	              <!-- /.card-header -->
 	              <div class="card-header">
-	                <h3 class="card-title">Blog Posts</h3>
+	                <h3 class="card-title">Categories</h3>
 	                <div class="card-tools">
 	                  <div class="input-group input-group-sm" style="width: 150px;">
 	                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -46,49 +46,38 @@
 	              <div class="card-body p-1">
   	              	<div class="row">
   	              		<div class="col-md-6" style="padding-left: 10px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; ">
-  	              			<a href="{{ route('backend.blog.create') }}" class="btn btn-info float-left">
+  	              			<a href="{{ route('backend.category.create') }}" class="btn btn-info float-left">
   	              			  <span>
   	              			    <i class="fa fa-plus-circle"></i>
   	              			    <span>
-  	              			      Add Post
+  	              			      Add Category
   	              			    </span>
   	              			  </span>
   	              			</a>
   	              		</div>
 						<div class="col-md-6" style="padding-left: 10px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; ">
-							<div class="pull-right" style="padding:7px 0;">
-							  <?php $links = [];?>
-							  @foreach($statusList as $key => $value)
-							      @if($value)
-							        <?php $selected = Request::get('status') == $key ? 'selected-status' : '' ?>
-							        <?php $links[] = "<a class=\"{$selected}\" href=\"?status={$key}\">" .ucwords($key) ."({$value}) </a>"?>
-							      @endif
-							  @endforeach
-							  {!! implode(' | ', $links) !!}
+							<div class="pull-right">
+							  
 							</div>
 						</div>
   	              	</div>
 				@include('backend.partials.message')
 
-	            @if(!$posts->count())
+	            @if(!$categories->count())
 				<div class="alert alert-danger">
 					<strong>No Record Found</strong>
 				</div>
 				@else
-					@if($onlyTrashed)
-						@include('backend.blog.table-trash')
-					@else
-						@include('backend.blog.table')
-					@endif
+					@include('backend.category.table')
 				@endif
 			</div>
 			<div class="card-footer clearfix">
 				<div class="pull-left" id="pagination">
-					{{ $posts->appends( Request::query() )->render() }}
+					{{ $categories->appends( Request::query() )->render() }}
 				</div>
 				<div class="pull-right">
-					<?php $postCount = $posts->count();?>
-					<small style="padding-right: 25px;">{{ $postCount }} out of {{ $allPostCount }} {{ str_plural('Items', $allPostCount) }}</small>
+					<?php $categoriesCount = $categories->count();?>
+					<small style="padding-right: 25px;">{{ $categoriesCount }} out of {{ $categoriesCount }} {{ str_plural('Items', $categoriesCount) }}</small>
 				</div>
 			</div>			                    	                	              
         </div>

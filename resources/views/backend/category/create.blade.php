@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title', 'Laravel 5 Blog | Add New Post')
+@section('title', 'Laravel 5 Blog | Add New Category')
 
 @section('content')
 <div class="content-wrapper">
@@ -9,12 +9,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Blog <small style="font-size: 15px">Add New Posts</small></h1>
+            <h1 class="m-0 text-dark">Category <small style="font-size: 15px">Add New Category</small></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="{{ url('/blog.index') }}">Blog</a></li>
+              <li class="breadcrumb-item"><a href="{{ url('/blog.index') }}">Category</a></li>
               <li class="breadcrumb-item active">Add new</li>
             </ol>
           </div><!-- /.col -->
@@ -25,15 +25,14 @@
 		<section class="content">
 		  <div class="container-fluid">
 		    <div class="row">
-		      <div class="col-md-9">
-		      	{!! Form::model($post, [
+		      <div class="col-md-12">
+		      	{!! Form::model($category, [
 		      		'method' => 'POST',
-		      		'route' => 'backend.blog.store',
-		      		'files' => TRUE,
-		      		'id' 	=> 'post-form'
+		      		'route' => 'backend.category.store',
+		      		'id' 	=> 'category-form'
 		      	])!!}
 
-		      	@include('backend.blog.form')
+		      	@include('backend.category.form')
 		        
 				{!! Form::close() !!} 
 			  </div>
@@ -45,4 +44,4 @@
 </div>
 	  <!-- /.content-wrapper -->
 @endsection
-@include('backend.blog.script')
+@include('backend.category.script')

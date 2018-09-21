@@ -56,6 +56,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item has-treeview">
+            <a href="{{ route('backend.category.index') }}" class="nav-link">
+              <i class="nav-icon fa fa-pencil"></i>
+              <p>
+                Category
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
