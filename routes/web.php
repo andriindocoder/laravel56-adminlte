@@ -47,3 +47,10 @@ Route::delete('/backend/blog/force-destroy/{blog}',[
 Route::resource('/backend/blog', 'Backend\BlogController',['as'=>'backend']);
 
 Route::resource('/backend/category', 'Backend\CategoryController',['as'=>'backend']);
+
+Route::get('/backend/user/confirm/{user}',[
+	'uses' => 'Backend\UsersController@confirm',
+	'as' => 'backend.user.confirm'
+]);
+
+Route::resource('/backend/user', 'Backend\UsersController',['as'=>'backend']);
