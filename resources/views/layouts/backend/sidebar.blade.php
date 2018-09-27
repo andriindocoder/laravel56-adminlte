@@ -56,6 +56,7 @@
               </li>
             </ul>
           </li>
+          @if(check_user_permissions(request(), "Category@index"))
           <li class="nav-item has-treeview">
             <a href="{{ route('backend.category.index') }}" class="nav-link">
               <i class="nav-icon fa fa-pencil"></i>
@@ -64,6 +65,8 @@
               </p>
             </a>
           </li>
+          @endif
+          @if(check_user_permissions(request(), "Users@index"))
           <li class="nav-item has-treeview">
             <a href="{{ route('backend.user.index') }}" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
@@ -72,6 +75,7 @@
               </p>
             </a>
           </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
