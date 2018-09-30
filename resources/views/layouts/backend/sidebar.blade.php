@@ -16,6 +16,7 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ $currentUser->name }}</a>
+          <span class="badge badge-warning">{{ $currentUser->roles->first()->display_name }}</span>
         </div>
       </div>
 

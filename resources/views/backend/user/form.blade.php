@@ -48,6 +48,19 @@
       @endif
     </div>
 
+    <div class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
+      {!! Form::label('role') !!}
+      @if($user->exists && $user->id == config('cms.default_user_id'))
+        {!! Form::hidden('role',$user->roles->first()->id) !!}
+        <p class="form-control-static">{{ $user->roles->first()->display_name }}</p>
+      @else
+      {!! Form::select('role',App\Role::pluck('display_name','id'), $user->exists ? $user->roles->first()->id : null, ['class'=>'form-control','placeholder' => 'Choose a Role']) !!}
+      @endif
+      @if($errors->has('role'))
+        <span class="badge badge-danger">{{ $errors->first('role') }}</span>
+      @endif
+    </div>
+
         <div class="pull-left">
           <button type="submit" class="btn btn-primary">{{ $user->exists ? 'Update' : 'Save'}}</button>
           <a href="{{ route('backend.user.index') }}" class="btn btn-default">Back</a>
