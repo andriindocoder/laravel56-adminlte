@@ -16,17 +16,7 @@
           <p>Nothing Found</p>
         </div>
       @else
-        @if(isset($categoryName))
-          <div class="alert alert-info">
-            <p>Category: <strong>{{ $categoryName }}</strong></p>
-          </div>
-        @endif
-
-        @if(isset($authorName))
-          <div class="alert alert-info">
-            <p>Author: <strong>{{ $authorName }}</strong></p>
-          </div>
-        @endif
+        @include('blog.alert')
 
         @foreach($posts as $post)
 
@@ -51,7 +41,7 @@
 
       <!-- Pagination -->
       <ul class="pagination justify-content-center mb-4">
-        {{ $posts->links() }}
+        {{ $posts->appends(request()->only(['term']))->links() }}
       </ul>
 
     </div>

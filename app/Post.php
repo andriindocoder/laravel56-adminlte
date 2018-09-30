@@ -92,6 +92,16 @@ class Post extends Model
 		return $query->whereNull("published_at");
 	}
 
+	public function scopeFilter($query, $term){
+		//check if any term entered
+		if($term){
+			$query->where(function($q) use ($term){
+				$q->orWhere('title', 'LIKE', "%{$term}%");
+				$q->orWhere('excerpt', 'LIKE', "%{$term}%");
+			});
+		}
+	}
+
 	public function formattedDate($showTimes = false){
 	    $format = "d/M/Y";
 	    if($showTimes) $format=$format." H:i:s";
