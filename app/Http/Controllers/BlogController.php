@@ -23,6 +23,10 @@ class BlogController extends Controller
 		return view("blog.index", compact('posts'));
 	}
 
+	public function hello($name){
+		return "Halo ".$name;
+	}
+
 	public function category(Category $category){
 		$categoryName = $category->title;
 
